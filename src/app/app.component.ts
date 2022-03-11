@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Subject, take, takeUntil } from 'rxjs';
-import { AuthService } from './auth.service';
+import { Subject, takeUntil } from 'rxjs';
+import { AuthService, UserData } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,16 +10,20 @@ import { AuthService } from './auth.service';
 export class AppComponent {
   public title = 'Your Budget';
   public isAuthenticated = false;
+  public userData: UserData | null = null;
   private _destroySub$ = new Subject<void>();
 
   constructor(private authService: AuthService) {
     authService.isAuthenticated$.pipe(
       takeUntil(this._destroySub$)
     ).subscribe((isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated);
+
+    authService.userData$.pipe(
+      takeUntil(this._destroySub$)
+    ).subscribe((userData: UserData | null) => this.userData = userData);
   }
 
   logout() {
-    this.isAuthenticated = false;
-    localStorage.removeItem('id_token');
+    this.authService.logout();
   }
 }
