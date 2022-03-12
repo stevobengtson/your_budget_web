@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, from, map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UserApiService } from './user-api.service';
+import { UserApiService } from './api/user-api.service';
 
 export interface UserData {
   id: number;

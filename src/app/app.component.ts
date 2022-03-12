@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { AuthService, UserData } from './auth.service';
+import { AuthService, UserData } from './services/auth.service';
 
 @Component({
   selector: 'app-root',

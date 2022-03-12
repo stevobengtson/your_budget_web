@@ -5,10 +5,6 @@ export interface UserResponse {
   id: 0;
   email: string;
   roles: Array<string>;
-  password: string;
-  budgets: Array<string>;
-  username: string;
-  userIdentifier: string;
 }
 
 @Injectable({
@@ -20,5 +16,11 @@ export class UserApiService {
 
   get(id: number) {
     return this.http.get<UserResponse>('/api/users/' + id);
+  }
+
+  create(email: string, password: string) {
+    return this.http.post<UserResponse>('/api/users', {
+      email, password
+    });
   }
 }
