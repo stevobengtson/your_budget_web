@@ -6,9 +6,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { JwtInterceptor } from './jwt.interceptor';
-import { LoginComponent } from './login/login.component';
+// Put all material modules in one place
 import { AngularMaterialModule } from './angular-material.module';
+// Services
+import { JwtInterceptor } from './jwt.interceptor';
+// Components
+import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
 @NgModule({

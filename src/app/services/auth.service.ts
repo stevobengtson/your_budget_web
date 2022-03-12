@@ -18,6 +18,8 @@ export interface AuthResponse {
   providedIn: 'root'
 })
 export class AuthService {
+  public redirectUrl: string | null = null;
+
   private _authSub$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public get isAuthenticated$(): Observable<boolean> {
     return this._authSub$.asObservable();
@@ -34,6 +36,14 @@ export class AuthService {
     let userData = strUserData == null ? null : JSON.parse(strUserData);
     this._authSub$.next(idToken !== null);
     this._userSub$.next(userData);
+  }
+
+  public get isAuthenticated(): boolean {
+    return this._authSub$.value;
+  }
+
+  public get userData(): UserData | null {
+    return this._userSub$.value;
   }
 
   login(email: string, password: string): Observable<void> {

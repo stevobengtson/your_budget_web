@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService, UserData } from './services/auth.service';
 
@@ -13,7 +14,7 @@ export class AppComponent {
   public userData: UserData | null = null;
   private _destroySub$ = new Subject<void>();
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     authService.isAuthenticated$.pipe(
       takeUntil(this._destroySub$)
     ).subscribe((isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated);
@@ -25,5 +26,6 @@ export class AppComponent {
 
   logout() {
     this.authService.logout();
+    this.router.navigateByUrl('/login');
   }
 }
