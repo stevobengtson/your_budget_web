@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { AuthService, UserData } from './services/auth.service';
+import { UserData } from './services/api/user-api.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',

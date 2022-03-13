@@ -1,1 +1,4 @@
-<p>Hello!</p>
+<div *ngIf="budget">
+    <p>{{budget.name}}</p>
+    <app-account [budgetId]="budget.id"></app-account>
+</div>

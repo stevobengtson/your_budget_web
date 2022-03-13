@@ -1,18 +1,17 @@
+import { SharedModule } from './shared.module';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// Put all material modules in one place
-import { AngularMaterialModule } from './angular-material.module';
 // Services
 import { JwtInterceptor } from './jwt.interceptor';
 // Components
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { BudgetModule } from './budget/budget.module';
 
 @NgModule({
   declarations: [
@@ -26,9 +25,8 @@ import { RegisterComponent } from './register/register.component';
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AngularMaterialModule
+    SharedModule,
+    BudgetModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

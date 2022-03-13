@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BaseCollection, BaseData } from './base-data.interface';
 
-export interface UserResponse {
-  id: 0;
+export interface UserData extends BaseData {
   email: string;
   roles: Array<string>;
+}
+
+export interface UserCollection extends BaseCollection<UserData> {
 }
 
 @Injectable({
@@ -14,13 +17,18 @@ export class UserApiService {
 
   constructor(private http: HttpClient) { }
 
+  list() {
+    return this.http.get<UserCollection>('/api/users');
+  }
+
   get(id: number) {
-    return this.http.get<UserResponse>('/api/users/' + id);
+    return this.http.get<UserData>('/api/users/' + id);
   }
 
   create(email: string, password: string) {
-    return this.http.post<UserResponse>('/api/users', {
-      email, password
+    return this.http.post<UserData>('/api/users', {
+      email,
+      plainPassword: password
     });
   }
 }

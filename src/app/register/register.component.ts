@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserApiService, UserResponse } from '../services/api/user-api.service';
+import { UserApiService, UserData } from '../services/api/user-api.service';
 
 @Component({
     selector: 'app-register',
@@ -13,7 +13,7 @@ export class RegisterComponent {
     constructor(private userApiService: UserApiService) { }
 
     public onSubmit(): void {
-        this.userApiService.create(this.email, this.password).subscribe(function (user: UserResponse) {
+        this.userApiService.create(this.email, this.password).subscribe(function (user: UserData) {
             console.log("User Created" + user.email);
         });
     }
