@@ -12,20 +12,19 @@ import { CreateBudgetComponent } from './create/create_budget.component';
     styleUrls: ['./budget.component.css']
 })
 export class BudgetComponent implements OnInit {
-    private userId: number = 0;
+    public loading: boolean = true;
     public budget: BudgetData | null = null;
+
+    private userId: number = 0;
 
     constructor(
         public dialog: MatDialog,
         private budgetApiService: BudgetApiService,
-        private authService: AuthService,
-        private userApiService: UserApiService,
-        private router: Router) { }
+        private authService: AuthService) { }
 
     ngOnInit(): void {
         this.userId = this.authService.userData?.id || 0;
         this.loadBudgets();
-        this.loadUsers();
     }
 
     openDialog(): void {
@@ -43,22 +42,14 @@ export class BudgetComponent implements OnInit {
 
     private loadBudgets(): void {
         this.budgetApiService.getUserBudgets(this.userId).subscribe((budgets: BudgetsResponse) => {
-            console.log(budgets);
             if (budgets["hydra:member"].length > 0) {
                 // Pick the first one for now
                 this.budget = budgets["hydra:member"][0];
-            } else {
-                this.openDialog();
             }
+            this.loading = false;
         }, (error: any) => {
             console.log(error);
-            this.openDialog();
-        });
-    }
-
-    private loadUsers(): void {
-        this.userApiService.get(this.userId).subscribe((user: UserData) => {
-            console.log(user);
+            this.loading = false;
         });
     }
 }

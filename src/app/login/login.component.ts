@@ -10,7 +10,7 @@ import { filter, Subject, take, takeUntil } from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public loginValid = true;
-  public username = '';
+  public email = '';
   public password = '';
 
   private _destroySub$ = new Subject<void>();
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public onSubmit(): void {
     this.loginValid = true;
 
-    this._authService.login(this.username, this.password).pipe(
+    this._authService.login(this.email, this.password).pipe(
       take(1)
     ).subscribe({
       next: _ => {

@@ -21,6 +21,10 @@ export class AccountComponent implements OnChanges {
         }
     }
 
+    public addAccount(): void {
+        alert("Work in Progress");
+    }
+
     private loadAccounts(): void {
         this.accountApiService.getBudgetAccounts(this.budgetId).subscribe((accounts: AccountCollection) => {
             this.accounts = accounts["hydra:member"];

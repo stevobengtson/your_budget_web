@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserApiService, UserData } from '../services/api/user-api.service';
 
 @Component({
@@ -10,11 +11,11 @@ export class RegisterComponent {
     public email = '';
     public password = '';
 
-    constructor(private userApiService: UserApiService) { }
+    constructor(private userApiService: UserApiService, private router: Router) { }
 
     public onSubmit(): void {
-        this.userApiService.create(this.email, this.password).subscribe(function (user: UserData) {
-            console.log("User Created" + user.email);
+        this.userApiService.create(this.email, this.password).subscribe((user: UserData) => {
+            this.router.navigate(['/login']);
         });
     }
 }
