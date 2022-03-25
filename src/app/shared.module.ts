@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
+import { BlockUIModule } from 'ng-block-ui';
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, BlockUIModule.forRoot()],
     declarations: [],
-    exports: [CommonModule, FormsModule, AngularMaterialModule]
+    exports: [CommonModule, FormsModule, ReactiveFormsModule, AngularMaterialModule, BlockUIModule]
 })
 export class SharedModule { }

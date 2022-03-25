@@ -1,11 +1,11 @@
-<mat-list>
-    <h3 matSubheader>Accounts</h3>
+<mat-list class="account-list">
+    <div mat-subheader>Accounts</div>
     <mat-list-item *ngFor="let account of accounts">
-        <h4 matLine>{{account.name}}</h4>
+        <div mat-line>{{account.name}}</div>
     </mat-list-item>
     <mat-divider></mat-divider>
+    <button mat-raised-button (click)="addAccount()">
+        <mat-icon>add</mat-icon>
+        Add Account
+    </button>
 </mat-list>
-<button mat-raised-button (click)="addAccount()">
-    <mat-icon>add</mat-icon>
-    Add Account
-</button>

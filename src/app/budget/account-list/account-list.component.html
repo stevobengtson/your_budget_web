@@ -1,0 +1,15 @@
+<mat-selection-list #accountsList [multiple]="false">
+    <mat-list-option *ngFor="let account of accounts" [value]="account">
+        <div mat-line (click)="pickAccount(account.id)">{{account.name}}</div>
+    </mat-list-option>
+    <!-- <mat-divider></mat-divider> -->
+    <hr />
+    <button mat-raised-button (click)="addAccount()">
+        <mat-icon>add</mat-icon>
+        Add Account
+    </button>
+</mat-selection-list>
+
+<p>
+    Option selected: {{accountsList.selectedOptions.selected[0]?.value.name}}
+</p>

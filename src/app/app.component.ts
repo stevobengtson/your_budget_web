@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { UserData } from './services/api/user-api.service';
 import { AuthService } from './services/auth.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { BlockUIService } from './services/block-ui.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,20 @@ export class AppComponent {
   public userData: UserData | null = null;
   private _destroySub$ = new Subject<void>();
 
-  constructor(private authService: AuthService, private router: Router) {
+  @BlockUI() blockUI!: NgBlockUI;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private blockUIService: BlockUIService
+  ) {
+
+    this.blockUIService.isBlocked$.pipe(
+      takeUntil(this._destroySub$)
+    ).subscribe((isBlocked: boolean) => {
+      isBlocked ? this.blockUI.start() : this.blockUI.stop();
+    });
+
     authService.isAuthenticated$.pipe(
       takeUntil(this._destroySub$)
     ).subscribe((isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated);

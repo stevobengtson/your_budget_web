@@ -1,13 +1,14 @@
-<div *ngIf="loading; else loaded">
-    <mat-spinner></mat-spinner>
-</div>
-
-<ng-template #loaded>
-<div *ngIf="budget">
-    <p>{{budget.name}}</p>
-    <app-account [budgetId]="budget.id"></app-account>
-</div>
-<div *ngIf="!budget">
-    <button mat-raised-button color="primary" (click)="openDialog()">Create Budget</button>
-</div>
-</ng-template>
+<mat-sidenav-container class="budget-container">
+    <mat-sidenav #sidenav mode="side" opened class="budget-sidenav" [fixedInViewport]="options.value.fixed"
+        [fixedTopGap]="options.value.top" [fixedBottomGap]="options.value.bottom">
+        <div *ngIf="budget">
+            <p>{{budget.name}}</p>
+            <app-account-list [budgetId]="budget.id" (onAccountPicked)="showAccount($event)"></app-account-list>
+            </div>
+    </mat-sidenav>
+    
+    <mat-sidenav-content [formGroup]="options" class="budget-content">
+        <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
+        <app-transaction-list [accountId]="accountId" *ngIf="accountId"></app-transaction-list>
+    </mat-sidenav-content>
+    </mat-sidenav-container>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, from, map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserApiService, UserData } from './api/user-api.service';
+import { environment } from "../../environments/environment";
 
 export interface AuthResponse {
   token: string;
@@ -41,7 +42,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<void> {
-    return from(this.http.post<AuthResponse>('/api/authentication_token', { email, password })).pipe(
+    return from(this.http.post<AuthResponse>(environment.apiUrl + '/authentication_token', { email, password })).pipe(
       map((t: AuthResponse) => this.handleSignInResponse(t))
     );
   }

@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BaseCollection, BaseData } from "./base-data.interface";
+import { environment } from "../../../environments/environment";
 
 export interface AccountData extends BaseData {
     name: string;
@@ -18,6 +19,6 @@ export class AccountApiService {
     constructor(private http: HttpClient) { }
 
     getBudgetAccounts(budgetId: number) {
-        return this.http.get<AccountCollection>('/api/budgets/' + budgetId + '/accounts');
+        return this.http.get<AccountCollection>(environment.apiUrl + '/budgets/' + budgetId + '/accounts');
     }
 }
