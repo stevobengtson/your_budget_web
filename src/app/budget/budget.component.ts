@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BudgetApiService, BudgetData, BudgetsResponse } from '../services/api/budget-api.service';
+import { BudgetApiService, BudgetData, BudgetCollection } from '../services/api/budget-api.service';
 import { AuthService } from '../services/auth.service';
 import { BlockUIService } from '../services/block-ui.service';
-import { CreateBudgetComponent } from './create/create_budget.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -14,9 +13,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class BudgetComponent implements OnInit {
     public options: FormGroup;
     public budget: BudgetData | null = null;
-    public accountId: number | null = null;
+    public accountId: string | undefined;
 
-    private userId: number = 0;
+    private userId: string = '';
 
     constructor(
         fb: FormBuilder,
@@ -33,32 +32,19 @@ export class BudgetComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.userId = this.authService.userData?.id || 0;
+        this.userId = this.authService.userData?.id ?? '';
 
         this.blockUIService.block();
         this.loadBudgets();
     }
 
-    openDialog(): void {
-        const dialogRef = this.dialog.open(CreateBudgetComponent, {
-            width: '450px',
-            data: {},
-        });
-
-        dialogRef.afterClosed().subscribe((result: BudgetData) => {
-            this.budgetApiService.create(result.name, this.userId).subscribe((budget: BudgetData) => {
-                this.budget = budget;
-            });
-        });
-    }
-
-    showAccount(accountId: number): void {
+    showAccount(accountId: string): void {
         console.log("Account selected: " + accountId);
         this.accountId = accountId;
     }
 
     private loadBudgets(): void {
-        this.budgetApiService.getUserBudgets(this.userId).subscribe((budgets: BudgetsResponse) => {
+        this.budgetApiService.getUserBudgets(this.userId).subscribe((budgets: BudgetCollection) => {
             if (budgets["hydra:member"].length > 0) {
                 // Pick the first one for now
                 this.budget = budgets["hydra:member"][0];

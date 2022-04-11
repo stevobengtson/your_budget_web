@@ -2,7 +2,7 @@ export interface BaseData {
     "@context": string;
     "@id": string;
     "@type": string;
-    id: number;
+    id: string;
 }
 
 export interface HydraView {
@@ -28,7 +28,6 @@ export interface HydraSearch {
     "hydra:mapping": HydraMapping[];
 }
 
-// TODO: Translate this into a better structure
 export interface BaseCollection<t> {
     "@context": string;
     "@id": string;

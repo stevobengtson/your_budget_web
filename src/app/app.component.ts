@@ -5,6 +5,7 @@ import { UserData } from './services/api/user-api.service';
 import { AuthService } from './services/auth.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { BlockUIService } from './services/block-ui.service';
+import { CacheService } from './services/cache.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private blockUIService: BlockUIService
+    private blockUIService: BlockUIService,
+    private cacheService: CacheService
   ) {
 
     this.blockUIService.isBlocked$.pipe(
@@ -43,5 +45,9 @@ export class AppComponent {
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/login');
+  }
+
+  clearCache() {
+    this.cacheService.cleanLocalStorage();
   }
 }

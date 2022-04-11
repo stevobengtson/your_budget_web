@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import { Router } from "@angular/router";
+import { BudgetManagerService } from "src/app/services/budget-manager.service";
 import { AccountApiService, AccountCollection, AccountData } from "../../services/api/account-api.service";
 
 @Component({
@@ -7,12 +9,14 @@ import { AccountApiService, AccountCollection, AccountData } from "../../service
     styleUrls: ['./account-list.component.css']
 })
 export class AccountListComponent implements OnChanges {
-    @Input() budgetId: number = 0;
-    @Output() onAccountPicked = new EventEmitter<number>();
+    @Input() budgetId: string = '';
+    @Output() onAccountPicked = new EventEmitter<string>();
 
     public accounts: AccountData[] = [];
 
-    constructor(private accountApiService: AccountApiService) { }
+    constructor(
+        private accountApiService: AccountApiService,
+        private router: Router) { }
 
     ngOnChanges(changes: SimpleChanges): void {
         for (const propName in changes) {
@@ -26,9 +30,8 @@ export class AccountListComponent implements OnChanges {
         alert("Work in Progress");
     }
 
-    public pickAccount(accountId: number): void {
-        console.log("Account picked: " + accountId);
-        this.onAccountPicked.emit(accountId);
+    public pickAccount(accountId: string): void {
+        this.router.navigate([this.budgetId, 'accounts', accountId]);
     }
 
     private loadAccounts(): void {

@@ -3,12 +3,10 @@
         [fixedTopGap]="options.value.top" [fixedBottomGap]="options.value.bottom">
         <div *ngIf="budget">
             <p>{{budget.name}}</p>
-            <app-account-list [budgetId]="budget.id" (onAccountPicked)="showAccount($event)"></app-account-list>
             </div>
     </mat-sidenav>
     
     <mat-sidenav-content [formGroup]="options" class="budget-content">
         <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
-        <app-transaction-list [accountId]="accountId" *ngIf="accountId"></app-transaction-list>
     </mat-sidenav-content>
     </mat-sidenav-container>

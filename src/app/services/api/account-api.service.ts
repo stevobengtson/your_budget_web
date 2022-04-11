@@ -18,7 +18,7 @@ export interface AccountCollection extends BaseCollection<AccountData> {
 export class AccountApiService {
     constructor(private http: HttpClient) { }
 
-    getBudgetAccounts(budgetId: number) {
+    getBudgetAccounts(budgetId: string) {
         return this.http.get<AccountCollection>(environment.apiUrl + '/budgets/' + budgetId + '/accounts');
     }
 }
