@@ -2,12 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, of, tap } from "rxjs"
 import { CacheService } from '../services/cache.service';
-
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
 
-    constructor(private cacheService: CacheService) {}
+    private cacheExpiration: number = 0;
+
+    constructor(private cacheService: CacheService) {
+        this.cacheExpiration = environment.httpCacheExpirationSeconds;
+    }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if(req.method !== "GET") {
@@ -26,7 +30,7 @@ export class CacheInterceptor implements HttpInterceptor {
                         this.cacheService.save({
                             key: req.url,
                             data: stateEvent.clone(),
-                            expirationMins: 5
+                            expirationSeconds: this.cacheExpiration
                         });
                     }
                 })

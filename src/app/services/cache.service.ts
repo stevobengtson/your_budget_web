@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 export interface LocalStorageSaveOptions {
     key: string
     data: any
-    expirationMins?: number
+    expirationSeconds?: number
 }
 
 @Injectable({
@@ -14,15 +14,14 @@ export class CacheService {
 
     save(options: LocalStorageSaveOptions) {
         // Set default values for optionals
-        options.expirationMins = options.expirationMins || 0
+        options.expirationSeconds = options.expirationSeconds || 0
 
         // Set expiration date in miliseconds
-        const expirationMS = options.expirationMins !== 0 ? options.expirationMins * 60 * 1000 : 0
+        const expirationMS = options.expirationSeconds * 1000
 
         const record = {
             value: typeof options.data === 'string' ? options.data : JSON.stringify(options.data),
-            expiration: expirationMS !== 0 ? new Date().getTime() + expirationMS : null,
-            hasExpiration: expirationMS !== 0 ? true : false
+            expiration: expirationMS !== 0 ? new Date().getTime() + expirationMS : null
         }
         localStorage.setItem(options.key, JSON.stringify(record))
     }
@@ -34,7 +33,7 @@ export class CacheService {
             const record = JSON.parse(item)
             const now = new Date().getTime()
             // Expired data will return null
-            if (!record || (record.hasExpiration && record.expiration <= now)) {
+            if (!record || (record.expiration !== null && record.expiration <= now)) {
                 return null
             } else {
                 return JSON.parse(record.value)
